@@ -1,0 +1,1 @@
+Application shows weather, temperature and humidity in the city which user is looking for.
