@@ -1,21 +1,33 @@
-const input = document.querySelector('input')
-const button = document.querySelector('button')
-const cityName = document.querySelector('.city-name')
-const warning = document.querySelector('.warning')
-const photo = document.querySelector('.photo')
-const weather = document.querySelector('.weather')
-const temperature = document.querySelector('.temperature')
-const humidity = document.querySelector('.humidity')
+let input, button, cityName, warning, photo, weather, temperature, humidity
 
-const API_LINK = 'https://api.openweathermap.org/data/2.5/weather?q='
-const API_KEY = '&appid=d33f32d45c69b55cc2ea90931c1f0d44'
-const API_UNITS = '&units=metric'
+const main = () => {
+    prepareDOMElements()
+    prepareDOMEvents()
+}
+
+const prepareDOMElements = () => {
+    input = document.querySelector('input')
+    button = document.querySelector('button')
+    cityName = document.querySelector('.city-name')
+    warning = document.querySelector('.warning')
+    photo = document.querySelector('.photo')
+    weather = document.querySelector('.weather')
+    temperature = document.querySelector('.temperature')
+    humidity = document.querySelector('.humidity')
+}
+
+const prepareDOMEvents = () => {
+    input.addEventListener('keyup', enterCheck)
+    button.addEventListener('click', getWeather)
+}
 
 const getWeather = () => {
 
-    if (input.value === '') {
-        alert('Enter city name.')
-    } else {
+    const API_LINK = 'https://api.openweathermap.org/data/2.5/weather?q='
+    const API_KEY = '&appid=d33f32d45c69b55cc2ea90931c1f0d44'
+    const API_UNITS = '&units=metric'
+
+    if (input.value !== '') {
 
         const city = input.value || 'Zielona Góra'
         const URL = API_LINK + city + API_KEY + API_UNITS
@@ -52,14 +64,13 @@ const getWeather = () => {
             }
 
         }).catch(() => warning.textContent = 'Invalid city name.')
+    } else {
+        alert('Enter city name.')
     }
 }
 
 const enterCheck = (e) => {
-    if(e.key === 'Enter'){
-        getWeather()
-    }
+    e.key === 'Enter' ? getWeather() : null
 }
 
-input.addEventListener('keyup',enterCheck)
-button.addEventListener('click',getWeather)
+document.addEventListener('DOMContentLoaded', main)
